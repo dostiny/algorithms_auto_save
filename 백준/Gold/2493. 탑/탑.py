@@ -1,17 +1,14 @@
-import sys;
-
-N = int(sys.stdin.readline())
-top = list(map(int, sys.stdin.readline().split()))
+N = int(input())
+arr = list(map(int, input().split()))
 stack = []
-answer = [0 for i in range(N)]
+answer = [0] * N
 
 for i in range(N):
     while stack:
-        if stack[-1][1] > top[i]:
-            answer[i] = stack[-1][0] + 1
+        if stack[-1][1] > arr[i]:
+            answer[i] = stack[-1][0]
             break
         else:
             stack.pop()
-    stack.append([i, top[i]])
-
+    stack.append([i + 1, arr[i]])
 print(*answer)
