@@ -1,52 +1,50 @@
+import sys
 from collections import deque
+input = sys.stdin.readline
 
-def bfs(yesno, color):
-    if yesno == 1:
-        while Q:
-            r, c = Q.popleft()
-            for i in range(4):
-                nr, nc = r + dy[i], c + dx[i]
-                if 0 <= nr < N and 0 <= nc < N and arr[nr][nc] == color and not yesrgb[nr][nc]:
-                    yesrgb[nr][nc] = 1
-                    Q.append((nr, nc))
-    elif yesno == 2:
-        if color == 'R' or color == 'G':
-            while Q:
-                r, c = Q.popleft()
-                for i in range(4):
-                    nr, nc = r + dy[i], c + dx[i]
-                    if 0 <= nr < N and 0 <= nc < N and not norgb[nr][nc] and (arr[nr][nc] == 'R' or arr[nr][nc] == 'G'):
-                        norgb[nr][nc] = 1
-                        Q.append((nr, nc))
-        else:
-            while Q:
-                r, c = Q.popleft()
-                for i in range(4):
-                    nr, nc = r + dy[i], c + dx[i]
-                    if 0 <= nr < N and 0 <= nc < N and not norgb[nr][nc] and arr[nr][nc] == color:
-                        norgb[nr][nc] = 1
-                        Q.append((nr, nc))
+def normal(st):
+    while normalQ:
+        r, c = normalQ.popleft()
+        for i in range(4):
+            nr, nc = r + dr[i], c + dc[i]
+            if 0 <= nr < N and 0 <= nc < N and arr[nr][nc] == st and normal_vi[nr][nc] == 0:
+                normal_vi[nr][nc] = 1
+                normalQ.append((nr, nc))
+
+def rgb(st):
+    while rgbQ:
+        r, c = rgbQ.popleft()
+        for i in range(4):
+            nr, nc = r + dr[i], c + dc[i]
+            if 0 <= nr < N and 0 <= nc < N and rgb_vi[nr][nc] == 0:
+                if (st == "B" and arr[nr][nc] == "B"):
+                    rgb_vi[nr][nc] = 1
+                    rgbQ.append((nr, nc))
+                elif (st == "R" or st == "G") and (arr[nr][nc] == "R" or arr[nr][nc] == "G"):
+                    rgb_vi[nr][nc] = 2
+                    rgbQ.append((nr, nc))
+
+dr = [-1, 0, 1, 0]
+dc = [0, 1, 0, -1]
 
 N = int(input())
-arr = [list(input()) for _ in range(N)]
-yesrgb = [[0] * N for _ in range(N)]
-norgb = [[0] * N for _ in range(N)]
-Q = deque()
-dy = [-1, 1, 0, 0]
-dx = [0, 0, 1, -1]
-ans1, ans2 = 0, 0
+arr = [list(input().rstrip('\n')) for _ in range(N)]
+normalQ, rgbQ = deque(), deque()
+normal_vi = [[0] * N for _ in range(N)]
+rgb_vi = [[0] * N for _ in range(N)]
+nocnt = rgbcnt = 0
+
 for r in range(N):
     for c in range(N):
-        if not yesrgb[r][c]:
-            ans1 += 1
-            color = arr[r][c]
-            Q.append((r, c))
-            yesrgb[r][c] = 1
-            bfs(1, color)
-        if not norgb[r][c]:
-            ans2 += 1
-            color = arr[r][c]
-            Q.append((r, c))
-            norgb[r][c] = 1
-            bfs(2, color)
-print(ans1, ans2)
+        if normal_vi[r][c] == 0:
+            nocnt += 1
+            normal_vi[r][c] = 1
+            normalQ.append((r, c))
+            normal(arr[r][c])
+        if rgb_vi[r][c] == 0:
+            rgbcnt += 1
+            rgb_vi[r][c] = 1
+            rgbQ.append((r, c))
+            rgb(arr[r][c])
+
+print(nocnt, rgbcnt)
