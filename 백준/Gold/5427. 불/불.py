@@ -17,7 +17,7 @@ def bfs():
             nr, nc = r + dr[i], c + dc[i]
             if 0 <= nr < R and 0 <= nc < C:
                 if Jvisited[nr][nc] == 0 and arr[nr][nc] == '.':
-                    if Fvisited[nr][nc] == 0 or Fvisited[nr][nc] > Jvisited[r][c] + 1:
+                    if Fvisited[nr][nc] == 0 or Fvisited[nr][nc] > Jvisited[r][c] + 2:
                         Jvisited[nr][nc] = Jvisited[r][c] + 1
                         JI.append((nr, nc))
             else:
@@ -38,5 +38,6 @@ for _ in range(int(input())):
             if arr[j][i] == "@":
                 JI.append((j, i))
             elif arr[j][i] == "*":
+                Fvisited[j][i] = 1
                 FI.append((j, i))
     print(bfs())
