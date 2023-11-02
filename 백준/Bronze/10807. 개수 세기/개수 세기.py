@@ -1,8 +1,15 @@
+import sys
+
+input = sys.stdin.readline
+
 N = int(input())
-arr = sorted(list(map(int, input().split())))
-result = int(input())
-cnt = 0
-for i in range(N):
-    if arr[i] == result:
-        cnt += 1
-print(cnt)
+arr = list(map(int, input().split()))
+v = int(input())
+
+result = 0
+
+for i in arr:
+    if i == v:
+        result += 1
+
+print(result)
