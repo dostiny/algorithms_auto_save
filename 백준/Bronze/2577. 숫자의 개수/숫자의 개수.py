@@ -1,13 +1,16 @@
-arr = [int(input()) for _ in range(3)]
-val = 1
-for i in arr:
-    val *= i
-val = str(val)
-v_li = list(map(int, val))
-num = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-for i in num:
-    cnt = 0
-    for j in v_li:
-        if i == j:
-            cnt += 1
-    print(cnt)
+import sys
+
+input = sys.stdin.readline
+
+mulN = 1
+for i in range(3):
+    N = int(input())
+    mulN *= N
+
+arr = [0] * 10
+S = str(mulN)
+for j in S:
+    arr[int(j)] += 1
+
+for k in arr:
+    print(k)
