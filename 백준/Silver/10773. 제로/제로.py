@@ -1,11 +1,14 @@
-import sys;
+import sys
 
-N = int(sys.stdin.readline())
-H = []
-for _ in range(N):
-    i = int(sys.stdin.readline())
-    if i != 0:
-        H.append(i)
-    elif i == 0:
-        H.pop()
-print(sum(H))
+input = sys.stdin.readline
+
+K = int(input())
+
+arr = []
+for _ in range(K):
+    n = int(input())
+    if n != 0:
+        arr.append(n)
+    else:
+        arr.pop()
+print(sum(arr))
