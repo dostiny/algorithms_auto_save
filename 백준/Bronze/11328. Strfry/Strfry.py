@@ -1,6 +1,14 @@
-for _ in range(int(input())):
-    arr = list(input())
-    c = len(arr)//2
-    list1 = arr[:c]
-    list2 = arr[c + 1:]
-    print('Possible' if sorted(list1) == sorted(list2) else 'Impossible')
+import sys
+
+input = sys.stdin.readline
+
+N = int(input())
+
+for _ in range(N):
+    result = 'Impossible'
+    s1, s2 = input().split()
+    s1 = sorted(list(map(str, s1)))
+    s2 = sorted(list(map(str, s2)))
+    if s1 == s2:
+        result = 'Possible'
+    print(result)
