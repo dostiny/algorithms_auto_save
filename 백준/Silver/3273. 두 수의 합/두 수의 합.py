@@ -1,3 +1,7 @@
+import sys
+
+input = sys.stdin.readline
+
 N = int(input())
 arr = sorted(list(map(int, input().split())))
 result = int(input())
